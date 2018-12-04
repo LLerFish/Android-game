@@ -3,51 +3,43 @@ package com.ller.team_project;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.View.OnClickListener;
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends GameActivity implements OnClickListener {
 
-    private int[] pictureStageOne = new int[]{0, 0, 0, 0, 0};
-    private int[] pictureStageTwo = new int[]{0, 0, 0, 0, 0};
-    private int[] pictureStageThree = new int[]{0, 0, 0, 0, 0};
+    private int[] images = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        // Init views
+        findViewById(R.id.btnStage1).setOnClickListener(this);
+        findViewById(R.id.btnStage2).setOnClickListener(this);
+        findViewById(R.id.btnStage3).setOnClickListener(this);
+
+        // Check bundle
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            if (bundle.containsKey("pictureTag1")) {
-                pictureStageOne = bundle.getIntArray("pictureTag1");
+            for (int i = 1; i <= 3; i++) {
+                if ((images = bundle.getIntArray("pictureTag" + i)) != null) { break; }
             }
-            else if (bundle.containsKey("pictureTag2")) {
-                pictureStageTwo = bundle.getIntArray("pictureTag2");
-            }
-            else if (bundle.containsKey("pictureTag3")) {
-                pictureStageThree = bundle.getIntArray("pictureTag3");
-            }
+        }
+        if (images == null) {
+            images = new int[]{0, 0, 0, 0, 0};
         }
 
         // Play music
         playMedia();
     }
 
-    // Go back to home page
-    public void back(View v) {
-        startActivity(new Intent(this, MainActivity.class));
+    @Override
+    protected int defaultContentView() {
+        return R.layout.activity_map;
     }
 
-    // Go to stage I
-    public void changeStage1(View v) {
-        Intent intent = new Intent(this, Stage1Activity.class);
-
-        Bundle bundle = new Bundle();
-        bundle.putIntArray("pictureTag1", pictureStageOne);
+    private void gotoStage(int stage) {
 
         MediaPlayer mp = GameMediaController.getMain(this);
         if (mp.isPlaying()) {
@@ -55,49 +47,49 @@ public class MapActivity extends AppCompatActivity {
             mp.prepareAsync();
         }
 
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-    // Go to stage II
-    public void changeStage2(View v) {
-        Intent intent = new Intent(this, Stage2Activity.class);
-
         Bundle bundle = new Bundle();
-        bundle.putIntArray("pictureTag2", pictureStageTwo);
+        bundle.putIntArray("pictureTag" + stage, images);
 
-        MediaPlayer mp = GameMediaController.getMain(this);
-        if (mp.isPlaying()) {
-            mp.stop();
-            mp.prepareAsync();
+        final Class clazz;
+        switch (stage) {
+        case 1:
+            clazz = Stage1Activity.class;
+            break;
+        case 2:
+            clazz = Stage2Activity.class;
+            break;
+        case 3:
+            clazz = Stage3Activity.class;
+            break;
+        default:
+            throw new RuntimeException("Invalid stage: " + stage);
         }
 
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-    // Go to stage III
-    public void changeStage3(View v) {
-        Intent intent = new Intent(this, Stage3Activity.class);
-
-        Bundle bundle = new Bundle();
-        bundle.putIntArray("pictureTag3", pictureStageThree);
-
-        MediaPlayer mp = GameMediaController.getMain(this);
-        if (mp.isPlaying()) {
-            mp.stop();
-            mp.prepareAsync();
-        }
-
+        Intent intent = new Intent(this, clazz);
         intent.putExtras(bundle);
         startActivity(intent);
     }
 
     // Play music
-    public void playMedia() {
+    private void playMedia() {
         MediaPlayer mp = GameMediaController.getMain(this);
         mp.start();
         mp.setLooping(true);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+        case R.id.btnStage1:
+            gotoStage(1);
+            break;
+        case R.id.btnStage2:
+            gotoStage(2);
+            break;
+        case R.id.btnStage3:
+            gotoStage(3);
+            break;
+        }
     }
 }
 

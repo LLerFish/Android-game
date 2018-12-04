@@ -51,9 +51,9 @@ public class Stage1_2Activity extends AppCompatActivity {
         playMedia();
     }
 
-    // Go setting page
+    // Go gotoSetting page
     public void setting(View v) {
-        Intent intent = new Intent(this, GameSetActivity.class);
+        Intent intent = new Intent(this, GameSettingActivity.class);
 
         Bundle bundle = new Bundle();
         index = 1;

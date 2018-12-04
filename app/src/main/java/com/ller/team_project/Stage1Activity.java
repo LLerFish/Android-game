@@ -68,9 +68,9 @@ public class Stage1Activity extends AppCompatActivity {
         }
     }
 
-    // Goto setting page
+    // Goto gotoSetting page
     public void setting(View v) {
-        Intent intent = new Intent(this, GameSetActivity.class);
+        Intent intent = new Intent(this, GameSettingActivity.class);
 
         Bundle bundle = new Bundle();
         index = 1;
@@ -164,7 +164,7 @@ public class Stage1Activity extends AppCompatActivity {
         finish();
     }
 
-    // Check setting tool's visibility to 'GONE'
+    // Check gotoSetting tool's visibility to 'GONE'
     public void whetherToSetGone(View v) {
         // 判斷哪個關卡進來,給定一個參數判斷btn的數量,在把參數用迴圈方式去判斷是否取得物件跟設定為GONE...etc
         // for (int i=0; i<num; i++) {

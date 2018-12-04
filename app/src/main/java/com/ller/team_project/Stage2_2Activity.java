@@ -67,7 +67,7 @@ public class Stage2_2Activity extends AppCompatActivity {
         }
     }
 
-    // Goto setting page
+    // Goto gotoSetting page
     public void setting(View v) {
         Bundle bundle = new Bundle();
         index = 2;
@@ -76,7 +76,7 @@ public class Stage2_2Activity extends AppCompatActivity {
         bundle.putInt("musicIndex", index);
         bundle.putInt("musicStopIndex", afterActivityIndex);
 
-        Intent intent = new Intent(this, GameSetActivity.class);
+        Intent intent = new Intent(this, GameSettingActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
     }
