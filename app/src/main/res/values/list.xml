@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="member_name">
+        <item>老師:鄭富國</item>
+        <item>組長:吳芃</item>
+        <item>組員:謝季軒</item>
+        <item>組員:陳廷瑀</item>
+        <item>組員:藍莉淇</item>
+        <item>組員:廖建鈞</item>
+    </string-array>
+</resources>
