@@ -3,17 +3,8 @@ package com.ller.team_project;
 import android.content.Context;
 import android.media.MediaPlayer;
 
-/*
-
-Point a = PointFactory.create(1, 1);
-Point b = PointFactory.create(1, 1);
-Point c = PointFactory.create(1, 1);
-
- */
-
-
 public class GameMediaController {
-    // factory  - 有/無明確的使用時機
+
     private static MediaPlayer main, stage1, stage2, stage3;
 
     private GameMediaController() {

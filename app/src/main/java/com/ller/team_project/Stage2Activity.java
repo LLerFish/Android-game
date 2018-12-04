@@ -2,19 +2,20 @@ package com.ller.team_project;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 public class Stage2Activity extends AppCompatActivity {
-    //private MediaPlayer mediaPlayer = null;
+
     private ImageButton btnList1, btnList2, btnList3, btnOneDollar, btnCoinGate, btnDrinkGate;
-    int[] pictureStageTwo = new int[]{0, 0, 0};
-    int[] flag = new int[]{0, 0, 0};//判斷我點的是哪個硬幣
-    private int drinkgate = 0,afterActivityIndex = 2;
+    private int[] pictureStageTwo = new int[]{0, 0, 0};
+    // Check which coin is selected
+    private int[] flag = new int[]{0, 0, 0};
+    private int drinkgate = 0, afterActivityIndex = 2;
     private int index;
     private ImageView background;
 
@@ -33,82 +34,84 @@ public class Stage2Activity extends AppCompatActivity {
         btnList3 = findViewById(R.id.btnList3);
         background = findViewById(R.id.background);
 
-        Bundle bundle = this.getIntent().getExtras();
-        if (bundle != null) {  //判斷解包
+        Bundle bundle = getIntent().getExtras();
+        // Check bundle
+        if (bundle != null) {
             pictureStageTwo = bundle.getIntArray("pictureTag");
             afterActivityIndex = bundle.getInt("musicStopIndex");
             flag = bundle.getIntArray("coinPlace");
             if (pictureStageTwo[0] == 1) {
                 btnList1.setImageResource(R.drawable.one);
-            } else if (pictureStageTwo[1] == 1) {
+            }
+            else if (pictureStageTwo[1] == 1) {
                 btnList2.setImageResource(R.drawable.one);
-            } else if (pictureStageTwo[2] == 1) {
+            }
+            else if (pictureStageTwo[2] == 1) {
                 btnList3.setImageResource(R.drawable.one);
             }
+
+            // What ??
             if (pictureStageTwo[0] == 2) {
                 btnList1.setImageResource(R.drawable.ten);
-            } else if (pictureStageTwo[1] == 2) {
+            }
+            else if (pictureStageTwo[1] == 2) {
                 btnList2.setImageResource(R.drawable.ten);
-            } else if (pictureStageTwo[2] == 2) {
+            }
+            else if (pictureStageTwo[2] == 2) {
                 btnList3.setImageResource(R.drawable.ten);
             }
+
+            // What is this ???
             if (pictureStageTwo[0] == 3) {
                 btnList1.setImageResource(R.drawable.fifty);
-            } else if (pictureStageTwo[1] == 3) {
+            }
+            else if (pictureStageTwo[1] == 3) {
                 btnList2.setImageResource(R.drawable.fifty);
-            } else if (pictureStageTwo[2] == 3) {
+            }
+            else if (pictureStageTwo[2] == 3) {
                 btnList3.setImageResource(R.drawable.fifty);
             }
         }
-            //if (afterActivityIndex == 2) {
-            playMedia();        //進入撥放音樂
-       // }
+
+        // Play music
+        playMedia();
     }
 
-    // 進入設定畫面
+    // Goto setting page
     public void setting(View v) {
-        Intent intent = new Intent();
-        intent.setClass(Stage2Activity.this, GameSetActivity.class);
-
         Bundle bundle = new Bundle();
         index = 2;
         afterActivityIndex = 2;
         bundle.putIntArray("pictureTag2", pictureStageTwo);
         bundle.putInt("musicIndex", index);
         bundle.putInt("musicStopIndex", afterActivityIndex);
-        intent.putExtras(bundle);
 
+        Intent intent = new Intent(this, GameSetActivity.class);
         intent.putExtras(bundle);
-
         startActivity(intent);
     }
 
-    // 回到地圖
+    // Go back to map
     public void back(View v) {
-        Intent intent = new Intent();
-        intent.setClass(Stage2Activity.this, MapActivity.class);
-
         Bundle bundle = new Bundle();
         afterActivityIndex = 0;
         bundle.putIntArray("pictureTag2", pictureStageTwo);
 
+        Intent intent = new Intent(this, MapActivity.class);
         intent.putExtras(bundle);
-
         startActivity(intent);
     }
 
-    // 切到右半邊
+    // Goto right side
     public void changePage(View v) {
-        Intent intent = new Intent();
-        intent.setClass(Stage2Activity.this, Stage2_2Activity.class);
-
         afterActivityIndex = 2;
         Bundle bundle = new Bundle();
         bundle.putIntArray("pictureTag2", pictureStageTwo);
         bundle.putInt("musicStopIndex", afterActivityIndex);
         //bundle.putIntArray("coinPlace", flag);
-        intent.putExtras(bundle);
 
+        Intent intent = new Intent(this, Stage2_2Activity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -118,26 +121,28 @@ public class Stage2Activity extends AppCompatActivity {
         mp.setLooping(true);
     }
 
-    // 把上方物品拉到下面物品格子
-    public void changeButtomListEvent(View v) {
+    // Pull objects to below blocks
+    public void changeButtonListEvent(View v) {
         if (v.getId() == R.id.btnOneDollar) {
             if (pictureStageTwo[0] == 0) {
                 btnList1.setImageResource(R.drawable.one);
                 pictureStageTwo[0] = 1;
                 btnOneDollar.setVisibility(View.GONE);
-
-            } else if (pictureStageTwo[1] == 0) {
+            }
+            else if (pictureStageTwo[1] == 0) {
                 btnList2.setImageResource(R.drawable.one);
                 pictureStageTwo[1] = 1;
                 btnOneDollar.setVisibility(View.GONE);
-            } else if (pictureStageTwo[2] == 0) {
+            }
+            else if (pictureStageTwo[2] == 0) {
                 btnList3.setImageResource(R.drawable.one);
                 pictureStageTwo[2] = 1;
                 btnOneDollar.setVisibility(View.GONE);
             }
         }
     }
-   /* public void changeButtomOpenDrinkgateEvent(View v){
+
+    /* public void changeButtomOpenDrinkgateEvent(View v){
         if (v.getId() == R.id.btnDrinkGate) {
             if(drinkgate == 0) {
                 background.setImageResource(R.drawable.stage2_2_open);

@@ -1,18 +1,19 @@
 package com.ller.team_project;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 public class Stage2_2Activity extends AppCompatActivity {
+
     private ImageButton btnList1, btnList2, btnList3, btnFiftyDollar, btnTenDollar;
-    int[] pictureStageTwo = new int[]{0, 0, 0};
-    int[] flag = new int[]{0, 0, 0};
-    private int afterActivityIndex, index, door=0;
+    private int[] pictureStageTwo = new int[]{0, 0, 0};
+    private int[] flag = new int[]{0, 0, 0};
+    private int afterActivityIndex, index, door = 0;
     private ImageView background2;
 
     @Override
@@ -29,130 +30,133 @@ public class Stage2_2Activity extends AppCompatActivity {
         btnList3 = findViewById(R.id.btnList3);
         background2 = findViewById(R.id.background2);
 
-        Bundle bundle = this.getIntent().getExtras();
-        if (bundle != null) {  //判斷解包
+        Bundle bundle = getIntent().getExtras();
+        // Check bundle
+        if (bundle != null) {
             pictureStageTwo = bundle.getIntArray("pictureTag");
             afterActivityIndex = bundle.getInt("musicStopIndex");
             flag = bundle.getIntArray("coinPlace");
             assert pictureStageTwo != null;
             if (pictureStageTwo[0] == 1) {
                 btnList1.setImageResource(R.drawable.one);
-            } else if (pictureStageTwo[1] == 1) {
+            }
+            else if (pictureStageTwo[1] == 1) {
                 btnList2.setImageResource(R.drawable.one);
-            } else if (pictureStageTwo[2] == 1) {
+            }
+            else if (pictureStageTwo[2] == 1) {
                 btnList3.setImageResource(R.drawable.one);
             }
             if (pictureStageTwo[0] == 2) {
                 btnList1.setImageResource(R.drawable.ten);
-            } else if (pictureStageTwo[1] == 2) {
+            }
+            else if (pictureStageTwo[1] == 2) {
                 btnList2.setImageResource(R.drawable.ten);
-            } else if (pictureStageTwo[2] == 2) {
+            }
+            else if (pictureStageTwo[2] == 2) {
                 btnList3.setImageResource(R.drawable.ten);
             }
             if (pictureStageTwo[0] == 3) {
                 btnList1.setImageResource(R.drawable.fifty);
-            } else if (pictureStageTwo[1] == 3) {
+            }
+            else if (pictureStageTwo[1] == 3) {
                 btnList2.setImageResource(R.drawable.fifty);
-            } else if (pictureStageTwo[2] == 3) {
+            }
+            else if (pictureStageTwo[2] == 3) {
                 btnList3.setImageResource(R.drawable.fifty);
             }
         }
     }
 
-    // 進入設定畫面
+    // Goto setting page
     public void setting(View v) {
-        Intent intent = new Intent();
-        intent.setClass(Stage2_2Activity.this, GameSetActivity.class);
-
         Bundle bundle = new Bundle();
         index = 2;
         afterActivityIndex = 2;
         bundle.putIntArray("pictureTag2", pictureStageTwo);
         bundle.putInt("musicIndex", index);
         bundle.putInt("musicStopIndex", afterActivityIndex);
-        intent.putExtras(bundle);
 
+        Intent intent = new Intent(this, GameSetActivity.class);
         intent.putExtras(bundle);
-
         startActivity(intent);
     }
 
-    // 回到地圖
+    // Go back to map
     public void back(View v) {
-        Intent intent = new Intent();
-        intent.setClass(Stage2_2Activity.this, MapActivity.class);
-
         Bundle bundle = new Bundle();
         afterActivityIndex = 0;
         bundle.putIntArray("pictureTag2", pictureStageTwo);
 
+        Intent intent = new Intent(this, MapActivity.class);
         intent.putExtras(bundle);
-
         startActivity(intent);
     }
 
-    // 切到左半邊
+    // Goto left side
     public void changePage(View v) {
-        Intent intent = new Intent();
-        intent.setClass(Stage2_2Activity.this, Stage2Activity.class);
-
-        //afterActivityIndex = 1;
+        // afterActivityIndex = 1;
         Bundle bundle = new Bundle();
         bundle.putIntArray("pictureTag2", pictureStageTwo);
         // bundle.putInt("musicStopIndex", afterActivityIndex);
         bundle.putIntArray("coinPlace", flag);
-        intent.putExtras(bundle);
 
+        Intent intent = new Intent(this, Stage2Activity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
-    // 把上方物品拉到下面物品格子
-    public void changeButtomListEvent(View v) {
+    // Pull objects to below blocks
+    public void changeButtonListEvent(View v) {
         if (v.getId() == R.id.btnTenDollar) {
             if (pictureStageTwo[0] == 0) {
                 btnList1.setImageResource(R.drawable.ten);
                 pictureStageTwo[0] = 2;
                 btnTenDollar.setVisibility(View.GONE);
-            } else if (pictureStageTwo[1] == 0) {
+            }
+            else if (pictureStageTwo[1] == 0) {
                 btnList2.setImageResource(R.drawable.ten);
                 pictureStageTwo[1] = 2;
                 btnTenDollar.setVisibility(View.GONE);
-            } else if (pictureStageTwo[2] == 0) {
+            }
+            else if (pictureStageTwo[2] == 0) {
                 btnList3.setImageResource(R.drawable.ten);
                 pictureStageTwo[2] = 2;
                 btnTenDollar.setVisibility(View.GONE);
             }
         }
-        if (v.getId() == R.id.btnFiftyDollar) {
+        else if (v.getId() == R.id.btnFiftyDollar) {
             if (pictureStageTwo[0] == 0) {
                 btnList1.setImageResource(R.drawable.fifty);
                 pictureStageTwo[0] = 3;
                 btnFiftyDollar.setVisibility(View.GONE);
-            } else if (pictureStageTwo[1] == 0) {
+            }
+            else if (pictureStageTwo[1] == 0) {
                 btnList2.setImageResource(R.drawable.fifty);
                 pictureStageTwo[1] = 3;
                 btnFiftyDollar.setVisibility(View.GONE);
-            } else if (pictureStageTwo[2] == 0) {
+            }
+            else if (pictureStageTwo[2] == 0) {
                 btnList3.setImageResource(R.drawable.fifty);
                 pictureStageTwo[2] = 3;
                 btnFiftyDollar.setVisibility(View.GONE);
             }
         }
     }
-    public void changeButtomOpendoorEvent(View v){
+
+    public void changeButtonOpenDoorEvent(View v) {
         if (v.getId() == R.id.btnDoor) {
-            if(door == 0) {
+            if (door == 0) {
                 background2.setImageResource(R.drawable.stage2_2_open);
-                door=1;
+                door = 1;
             }
-            else if(door == 1){
+            else if (door == 1) {
                 background2.setImageResource(R.drawable.stage2_2);
-                door=0;
+                door = 0;
             }
         }
     }
 
-    public void openDoor(View v){
+    public void openDoor(View v) {
         background2.setImageResource(R.drawable.stage2_2_open);
         btnFiftyDollar.setVisibility(View.VISIBLE);
     }

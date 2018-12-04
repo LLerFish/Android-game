@@ -12,7 +12,8 @@ public class Stage1_2Activity extends AppCompatActivity {
 
     int[] pictureStageOne = new int[]{0, 0, 0};
     private ImageButton btnList1, btnList2;
-    private int afterActivityIndex, index;;
+    private int afterActivityIndex, index;
+    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,31 +25,35 @@ public class Stage1_2Activity extends AppCompatActivity {
         btnList1 = findViewById(R.id.btnList1);
         btnList2 = findViewById(R.id.btnList2);
 
-        Bundle bundle = this.getIntent().getExtras();
-        if (bundle != null) {  //判斷解包
+        Bundle bundle = getIntent().getExtras();
+        //Check bundle
+        if (bundle != null) {
             pictureStageOne = bundle.getIntArray("pictureTag1");
             afterActivityIndex = bundle.getInt("musicStopIndex");
             assert pictureStageOne != null;
             if (pictureStageOne[0] == 1) {
                 btnList1.setImageResource(R.drawable.erase);
-            } else if (pictureStageOne[1] == 1) {
+            }
+            else if (pictureStageOne[1] == 1) {
                 btnList2.setImageResource(R.drawable.erase);
             }
             if (pictureStageOne[0] == 2) {
                 btnList1.setImageResource(R.drawable.cake);
-            //    picture[0] = 2;
-            } else if (pictureStageOne[1] == 2) {
+                // picture[0] = 2;
+            }
+            else if (pictureStageOne[1] == 2) {
                 btnList2.setImageResource(R.drawable.cake);
-            //    picture[1] = 2;
+                // picture[1] = 2;
             }
         }
-        playMedia();        //進入撥放音樂
+
+        // Play music
+        playMedia();
     }
 
-    // 進入設定畫面
+    // Go setting page
     public void setting(View v) {
-        Intent intent = new Intent();
-        intent.setClass(Stage1_2Activity.this, GameSetActivity.class);
+        Intent intent = new Intent(this, GameSetActivity.class);
 
         Bundle bundle = new Bundle();
         index = 1;
@@ -58,14 +63,12 @@ public class Stage1_2Activity extends AppCompatActivity {
         bundle.putInt("musicStopIndex", afterActivityIndex);
 
         intent.putExtras(bundle);
-
         startActivity(intent);
     }
 
-    // 回到地圖
+    // Go back to map
     public void back(View v) {
-        Intent intent = new Intent();
-        intent.setClass(Stage1_2Activity.this, MapActivity.class);
+        Intent intent = new Intent(this, MapActivity.class);
 
         Bundle bundle = new Bundle();
         afterActivityIndex = 0;
@@ -80,10 +83,9 @@ public class Stage1_2Activity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // 切到左半逼
+    // Go to left-map
     public void changePage(View v) {
-        Intent intent = new Intent();
-        intent.setClass(Stage1_2Activity.this, Stage1Activity.class);
+        Intent intent = new Intent(this, Stage1Activity.class);
 
         Bundle bundle = new Bundle();
         afterActivityIndex = 1;
@@ -94,7 +96,7 @@ public class Stage1_2Activity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // 撥放音樂
+    // Play music
     public void playMedia() {
         MediaPlayer mp = GameMediaController.getStage1(this);
         mp.start();

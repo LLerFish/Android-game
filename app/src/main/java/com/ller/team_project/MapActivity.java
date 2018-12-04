@@ -9,9 +9,9 @@ import android.view.WindowManager;
 
 public class MapActivity extends AppCompatActivity {
 
-    int[] pictureStageOne = new int[]{0, 0, 0, 0, 0};
-    int[] pictureStageTwo = new int[]{0, 0, 0, 0, 0};
-    int[] pictureStageThree = new int[]{0, 0, 0, 0, 0};
+    private int[] pictureStageOne = new int[]{0, 0, 0, 0, 0};
+    private int[] pictureStageTwo = new int[]{0, 0, 0, 0, 0};
+    private int[] pictureStageThree = new int[]{0, 0, 0, 0, 0};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,30 +20,31 @@ public class MapActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Bundle bundle = this.getIntent().getExtras();
-        if (bundle != null && bundle.containsKey("pictureTag1")) {
-            pictureStageOne = bundle.getIntArray("pictureTag1");
-        } else if (bundle != null && bundle.containsKey("pictureTag2")) {
-            pictureStageTwo = bundle.getIntArray("pictureTag2");
-        } else if (bundle != null && bundle.containsKey("pictureTag3")) {
-            pictureStageThree = bundle.getIntArray("pictureTag3");
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            if (bundle.containsKey("pictureTag1")) {
+                pictureStageOne = bundle.getIntArray("pictureTag1");
+            }
+            else if (bundle.containsKey("pictureTag2")) {
+                pictureStageTwo = bundle.getIntArray("pictureTag2");
+            }
+            else if (bundle.containsKey("pictureTag3")) {
+                pictureStageThree = bundle.getIntArray("pictureTag3");
+            }
         }
 
-        playMedia();        //進入撥放音樂
+        // Play music
+        playMedia();
     }
 
-    // 按下返回主畫面
+    // Go back to home page
     public void back(View v) {
-        Intent intent = new Intent();
-        intent.setClass(MapActivity.this, MainActivity.class);
-
-        startActivity(intent);
+        startActivity(new Intent(this, MainActivity.class));
     }
 
-    // 按下第一關
+    // Go to stage I
     public void changeStage1(View v) {
-        Intent intent = new Intent();
-        intent.setClass(MapActivity.this, Stage1Activity.class);
+        Intent intent = new Intent(this, Stage1Activity.class);
 
         Bundle bundle = new Bundle();
         bundle.putIntArray("pictureTag1", pictureStageOne);
@@ -58,10 +59,9 @@ public class MapActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // 按下第二關
+    // Go to stage II
     public void changeStage2(View v) {
-        Intent intent = new Intent();
-        intent.setClass(MapActivity.this, Stage2Activity.class);
+        Intent intent = new Intent(this, Stage2Activity.class);
 
         Bundle bundle = new Bundle();
         bundle.putIntArray("pictureTag2", pictureStageTwo);
@@ -76,10 +76,9 @@ public class MapActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // 按下第三關
+    // Go to stage III
     public void changeStage3(View v) {
-        Intent intent = new Intent();
-        intent.setClass(MapActivity.this, Stage3Activity.class);
+        Intent intent = new Intent(this, Stage3Activity.class);
 
         Bundle bundle = new Bundle();
         bundle.putIntArray("pictureTag3", pictureStageThree);
@@ -94,7 +93,7 @@ public class MapActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // 撥放音樂
+    // Play music
     public void playMedia() {
         MediaPlayer mp = GameMediaController.getMain(this);
         mp.start();

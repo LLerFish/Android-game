@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 public class MainActivity extends AppCompatActivity {
+
     private int index;
 
     @Override
@@ -17,18 +18,16 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        playMedia();        //進入撥放音樂
+        // Play music
+        playMedia();
     }
 
-    // 按下開始遊戲
+    // Game starts
     public void start(View v) {
-        Intent intent = new Intent();
-        intent.setClass(MainActivity.this, MapActivity.class);
-
-        startActivity(intent);
+        startActivity(new Intent(this, MapActivity.class));
     }
 
-    // 按下設定
+    // Go setting page
     public void setting(View v) {
         MediaPlayer mp = GameMediaController.getMain(this);
         mp.stop();
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // 撥放背景音樂
+    // Play background music
     public void playMedia() {
         MediaPlayer mp = GameMediaController.getMain(this);
         mp.start();
