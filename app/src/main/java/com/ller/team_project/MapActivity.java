@@ -53,13 +53,13 @@ public class MapActivity extends GameActivity implements OnClickListener {
         final Class clazz;
         switch (stage) {
         case 1:
-            clazz = Stage1Activity.class;
+            clazz = Stage1lActivity.class;
             break;
         case 2:
-            clazz = Stage2Activity.class;
+            clazz = Stage2lActivity.class;
             break;
         case 3:
-            clazz = Stage3Activity.class;
+            clazz = Stage3lActivity.class;
             break;
         default:
             throw new RuntimeException("Invalid stage: " + stage);

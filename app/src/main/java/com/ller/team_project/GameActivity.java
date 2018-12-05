@@ -3,6 +3,7 @@ package com.ller.team_project;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -20,9 +21,9 @@ public abstract class GameActivity extends AppCompatActivity {
         getWindow().setFlags(FLAG_FULLSCREEN, FLAG_FULLSCREEN);
         setContentView(defaultContentView());
 
-        final float scale = getResources().getDisplayMetrics().density;
-        final int imgLenInDp = (int) (72 * scale + .5f);
-        final int imgMarInDp = (int) (12 * scale + .5f);
+        final float scale = getDpScale();
+        final int imgLenInDp = roundScale(72, scale);
+        final int imgMarInDp = roundScale(12, scale);
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(imgLenInDp, imgLenInDp);
         p.addRule(ALIGN_PARENT_END);
         p.addRule(ALIGN_PARENT_TOP);
@@ -35,11 +36,23 @@ public abstract class GameActivity extends AppCompatActivity {
         imgBack.setOnClickListener(v -> finish());
         imgBack.setLayoutParams(p);
 
-        ViewGroup layout = findViewById(android.R.id.content);
-        layout = (ViewGroup) layout.getChildAt(0);
-        layout.addView(imgBack);
+        getRootLayout().addView(imgBack);
     }
 
     protected abstract int defaultContentView();
+
+    protected ViewGroup getRootLayout(){
+        ViewGroup layout = findViewById(android.R.id.content);
+        layout = (ViewGroup) layout.getChildAt(0);
+        return layout;
+    }
+
+    protected float getDpScale() {
+        return getResources().getDisplayMetrics().density;
+    }
+
+    protected int roundScale(float dp, float scale){
+        return (int) (dp * scale + .5f);
+    }
 
 }

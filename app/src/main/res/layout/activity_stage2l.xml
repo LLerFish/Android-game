@@ -4,65 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="0dp"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ller.team_project.MapActivity">
+    tools:context=".Stage2lActivity">
 
     <ImageView
+        android:id="@+id/imgBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/map" />
+        app:srcCompat="@drawable/stage2" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_height="match_parent">
 
         <ImageButton
-            android:id="@+id/btnStage1"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.595"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.365"
-            app:srcCompat="@drawable/am_elevator" />
-        
-        <ImageButton
-            android:id="@+id/btnStage2"
-            android:layout_width="48dp"
+            android:id="@+id/objCoin1"
+            android:layout_width="36dp"
             android:layout_height="36dp"
             android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
+            android:src="@drawable/one"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.423"
+            app:layout_constraintHorizontal_bias="0.07"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.78"
-            app:srcCompat="@drawable/general_building" />
+            app:layout_constraintVertical_bias="0.89" />
         
         <ImageButton
-            android:id="@+id/btnStage3"
-            android:layout_width="28dp"
-            android:layout_height="48dp"
+            android:id="@+id/btnDrinkGate"
+            android:layout_width="111dp"
+            android:layout_height="42dp"
             android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.548"
+            app:layout_constraintHorizontal_bias="0.26"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.81"
-            app:srcCompat="@drawable/library" />
+            app:layout_constraintVertical_bias="0.79" />
+        
+        <ImageButton
+            android:id="@+id/btnCoinGate"
+            android:layout_width="50dp"
+            android:layout_height="45dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.52"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.45" />
     </android.support.constraint.ConstraintLayout>
 
 </RelativeLayout>
