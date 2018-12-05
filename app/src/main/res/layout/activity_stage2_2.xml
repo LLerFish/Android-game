@@ -108,7 +108,7 @@
         android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
         android:onClick="changeButtonListEvent"
-        android:src="@mipmap/fifty"
+        android:src="@drawable/fifty"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

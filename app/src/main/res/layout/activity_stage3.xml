@@ -11,5 +11,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
-        app:srcCompat="@mipmap/stage3" />
+        app:srcCompat="@drawable/stage3" />
 </android.support.constraint.ConstraintLayout>
