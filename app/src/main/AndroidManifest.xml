@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.ller.team_project">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
@@ -21,33 +22,41 @@
         </activity>
         <activity
             android:name=".MapActivity"
-            android:label="@string/title_activity_map"
+            android:launchMode="singleInstance"
+            android:configChanges="screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Stage1Activity"
-            android:label="@string/title_activity_stage1"
+            android:name=".Stage1lActivity"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ShowResultActivity"
-            android:label="@string/title_activity_show_result"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".GameSetActivity"
+            android:name=".GameSettingActivity"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Stage1_2Activity"
+            android:name=".Stage1rActivity"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Stage2Activity"
+            android:name=".Stage2lActivity"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ShowResult2Activity"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Stage2_2Activity"
+            android:name=".Stage2rActivity"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Stage3Activity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Stage3lActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

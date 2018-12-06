@@ -3,50 +3,43 @@ package com.ller.team_project;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.View.OnClickListener;
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends GameActivity implements OnClickListener {
 
-    int[] pictureStageOne = new int[]{0, 0, 0, 0, 0};
-    int[] pictureStageTwo = new int[]{0, 0, 0, 0, 0};
-    int[] pictureStageThree = new int[]{0, 0, 0, 0, 0};
+    private int[] images = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Bundle bundle = this.getIntent().getExtras();
-        if (bundle != null && bundle.containsKey("pictureTag1")) {
-            pictureStageOne = bundle.getIntArray("pictureTag1");
-        } else if (bundle != null && bundle.containsKey("pictureTag2")) {
-            pictureStageTwo = bundle.getIntArray("pictureTag2");
-        } else if (bundle != null && bundle.containsKey("pictureTag3")) {
-            pictureStageThree = bundle.getIntArray("pictureTag3");
+        // Init views
+        findViewById(R.id.btnStage1).setOnClickListener(this);
+        findViewById(R.id.btnStage2).setOnClickListener(this);
+        findViewById(R.id.btnStage3).setOnClickListener(this);
+
+        // Check bundle
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            for (int i = 1; i <= 3; i++) {
+                if ((images = bundle.getIntArray("pictureTag" + i)) != null) { break; }
+            }
+        }
+        if (images == null) {
+            images = new int[]{0, 0, 0, 0, 0};
         }
 
-        playMedia();        //進入撥放音樂
+        // Play music
+        playMedia();
     }
 
-    // 按下返回主畫面
-    public void back(View v) {
-        Intent intent = new Intent();
-        intent.setClass(MapActivity.this, MainActivity.class);
-
-        startActivity(intent);
+    @Override
+    protected int defaultContentView() {
+        return R.layout.activity_map;
     }
 
-    // 按下第一關
-    public void changeStage1(View v) {
-        Intent intent = new Intent();
-        intent.setClass(MapActivity.this, Stage1Activity.class);
-
-        Bundle bundle = new Bundle();
-        bundle.putIntArray("pictureTag1", pictureStageOne);
+    private void gotoStage(int stage) {
 
         MediaPlayer mp = GameMediaController.getMain(this);
         if (mp.isPlaying()) {
@@ -54,51 +47,49 @@ public class MapActivity extends AppCompatActivity {
             mp.prepareAsync();
         }
 
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-    // 按下第二關
-    public void changeStage2(View v) {
-        Intent intent = new Intent();
-        intent.setClass(MapActivity.this, Stage2Activity.class);
-
         Bundle bundle = new Bundle();
-        bundle.putIntArray("pictureTag2", pictureStageTwo);
+        bundle.putIntArray("pictureTag" + stage, images);
 
-        MediaPlayer mp = GameMediaController.getMain(this);
-        if (mp.isPlaying()) {
-            mp.stop();
-            mp.prepareAsync();
+        final Class clazz;
+        switch (stage) {
+        case 1:
+            clazz = Stage1lActivity.class;
+            break;
+        case 2:
+            clazz = Stage2lActivity.class;
+            break;
+        case 3:
+            clazz = Stage3lActivity.class;
+            break;
+        default:
+            throw new RuntimeException("Invalid stage: " + stage);
         }
 
+        Intent intent = new Intent(this, clazz);
         intent.putExtras(bundle);
         startActivity(intent);
     }
 
-    // 按下第三關
-    public void changeStage3(View v) {
-        Intent intent = new Intent();
-        intent.setClass(MapActivity.this, Stage3Activity.class);
-
-        Bundle bundle = new Bundle();
-        bundle.putIntArray("pictureTag3", pictureStageThree);
-
-        MediaPlayer mp = GameMediaController.getMain(this);
-        if (mp.isPlaying()) {
-            mp.stop();
-            mp.prepareAsync();
-        }
-
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-    // 撥放音樂
-    public void playMedia() {
+    // Play music
+    private void playMedia() {
         MediaPlayer mp = GameMediaController.getMain(this);
         mp.start();
         mp.setLooping(true);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+        case R.id.btnStage1:
+            gotoStage(1);
+            break;
+        case R.id.btnStage2:
+            gotoStage(2);
+            break;
+        case R.id.btnStage3:
+            gotoStage(3);
+            break;
+        }
     }
 }
 
