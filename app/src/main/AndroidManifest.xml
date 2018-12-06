@@ -46,7 +46,10 @@
         <activity
             android:name=".Stage2_2Activity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Stage3Activity"
+        <activity
+            android:name=".Stage3Activity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Stage3_2Activity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

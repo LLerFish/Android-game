@@ -37,7 +37,7 @@ public class GameSetActivity extends AppCompatActivity implements View.OnClickLi
 
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null && bundle.containsKey("pictureTag1")) {
-            pictureStageOne = bundle.getIntArray("pictureTag");
+            pictureStageOne = bundle.getIntArray("pictureTag1");
             index = bundle.getInt("musicIndex");
             afterActivityIndex = bundle.getInt("musicStopIndex");
             count = index;

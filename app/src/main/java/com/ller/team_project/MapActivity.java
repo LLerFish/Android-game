@@ -12,7 +12,8 @@ public class MapActivity extends AppCompatActivity {
     int[] pictureStageOne = new int[]{0, 0, 0, 0, 0};
     int[] pictureStageTwo = new int[]{0, 0, 0, 0, 0};
     int[] pictureStageThree = new int[]{0, 0, 0, 0, 0};
-
+    int[] btnStage1Gone = new int[]{0, 0,0 ,0, 0};
+    int[] btnStage2Gone = new int[]{0, 0,0 ,0, 0};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,10 +22,12 @@ public class MapActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Bundle bundle = this.getIntent().getExtras();
-        if (bundle != null && bundle.containsKey("pictureTag1")) {
+        if (bundle != null && bundle.containsKey("pictureTag1") && bundle.containsKey("pictureTag1")) {
             pictureStageOne = bundle.getIntArray("pictureTag1");
-        } else if (bundle != null && bundle.containsKey("pictureTag2")) {
+            btnStage1Gone = bundle.getIntArray("pictureGone1");
+        } else if (bundle != null && bundle.containsKey("pictureTag2") && bundle.containsKey("pictureTag1")) {
             pictureStageTwo = bundle.getIntArray("pictureTag2");
+            btnStage2Gone = bundle.getIntArray("pictureGone2");
         } else if (bundle != null && bundle.containsKey("pictureTag3")) {
             pictureStageThree = bundle.getIntArray("pictureTag3");
         }
@@ -47,7 +50,7 @@ public class MapActivity extends AppCompatActivity {
 
         Bundle bundle = new Bundle();
         bundle.putIntArray("pictureTag1", pictureStageOne);
-
+        bundle.putIntArray("pictureGone1", btnStage1Gone);
         MediaPlayer mp = GameMediaController.getMain(this);
         if (mp.isPlaying()) {
             mp.stop();
@@ -65,7 +68,7 @@ public class MapActivity extends AppCompatActivity {
 
         Bundle bundle = new Bundle();
         bundle.putIntArray("pictureTag2", pictureStageTwo);
-
+        bundle.putIntArray("pictureGone2", btnStage2Gone);
         MediaPlayer mp = GameMediaController.getMain(this);
         if (mp.isPlaying()) {
             mp.stop();

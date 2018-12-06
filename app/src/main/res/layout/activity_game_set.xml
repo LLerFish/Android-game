@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="15dp"
+    android:paddingBottom="20dp"
     tools:context="com.ller.team_project.GameSetActivity">
 
     <ImageButton
@@ -13,47 +15,32 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
-        android:onClick="back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/back" />
+        android:onClick="back" />
 
     <CheckBox
         android:id="@+id/chb1"
-        android:layout_width="226dp"
+        android:layout_width="wrap_content"
         android:layout_height="71dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="92dp"
-        android:layout_marginEnd="8dp"
+        android:layout_above="@+id/btn_02"
+        android:layout_centerHorizontal="true"
         android:fontFamily="cursive"
         android:text="聲音是否靜音"
-        android:textSize="24sp"
-        android:typeface="sans"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.415"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn1" />
+        android:textSize="28sp"
+        android:typeface="sans" />
 
     <Button
         android:id="@+id/btn_02"
-        android:layout_width="153dp"
-        android:layout_height="79dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="36dp"
         android:background="@drawable/button_rounde"
         android:backgroundTintMode="src_over"
+        android:fontFamily="sans-serif-condensed"
         android:onClick="member_list"
+        android:padding="36dp"
         android:text="製作人員"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chb1"
-        app:layout_constraintVertical_bias="0.386" />
-</android.support.constraint.ConstraintLayout>
+        android:textSize="48sp" />
+</RelativeLayout>

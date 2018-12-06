@@ -3,15 +3,18 @@ package com.ller.team_project;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class Stage1Activity extends AppCompatActivity {
 
     private ImageButton btnList1, btnList2, btnObjectCake, btnObjectEraser;
-    int[] pictureStageOne = new int[]{0, 0, 0};
+    int[] pictureStageOne = new int[]{0, 0};
+    int[] btnStage1Gone = new int[]{0, 0};          //GONE=1
     private int afterActivityIndex = 0;
     private int index;
 
@@ -27,32 +30,31 @@ public class Stage1Activity extends AppCompatActivity {
         btnList1 = findViewById(R.id.btnList1);
         btnList2 = findViewById(R.id.btnList2);
 
-        Bundle bundle = this.getIntent().getExtras();          // 判斷解包
+        Bundle bundle = this.getIntent().getExtras();
         if (bundle != null) {
-            pictureStageOne = bundle.getIntArray("pictureTag1");
-            afterActivityIndex = bundle.getInt("musicStopIndex");
-            index = bundle.getInt("musicIndex");
-            if (pictureStageOne[0] == 1) {
-                btnList1.setImageResource(R.drawable.erase);
-               // picture[0] = 1;
-            } else if (pictureStageOne[1] == 1) {
-                btnList2.setImageResource(R.drawable.erase);
-              //  picture[1] = 1;
+            if (bundle.containsKey("pictureGone1")) {
+                btnStage1Gone = bundle.getIntArray("pictureGone1");
+                whetherToSetGone();
             }
-            if (pictureStageOne[0] == 2) {
-                btnList1.setImageResource(R.drawable.cake);
-              //  picture[0] = 2;
-            } else if (pictureStageOne[1] == 2) {
-                btnList2.setImageResource(R.drawable.cake);
-               // picture[1] = 2;
+            if (bundle.containsKey("musicStopIndex")) {
+                afterActivityIndex = bundle.getInt("musicStopIndex");
+            }
+            if (bundle.containsKey("musicIndex")) {
+                index = bundle.getInt("musicIndex");
+            }
+            if (bundle.containsKey("pictureTag1")) {
+                pictureStageOne = bundle.getIntArray("pictureTag1");
+                assert pictureStageOne != null;
+                setImage();
             }
         }
+
         if (afterActivityIndex == 0) {
-            playMedia();        //進入撥放音樂
+            playMedia();
         }
     }
 
-    // 關掉這個activity時是否關掉音樂
+    // whether to shut down the music when leaving this Activity
     @Override
     protected void onPause() {
         super.onPause();
@@ -64,7 +66,7 @@ public class Stage1Activity extends AppCompatActivity {
         }
     }
 
-    // 進入設定畫面
+    // go to the GameSetActivity
     public void setting(View v) {
         Intent intent = new Intent();
         intent.setClass(Stage1Activity.this, GameSetActivity.class);
@@ -73,6 +75,7 @@ public class Stage1Activity extends AppCompatActivity {
         index = 1;
         afterActivityIndex = 1;
         bundle.putIntArray("pictureTag1", pictureStageOne);
+        bundle.putIntArray("pictureGone1", btnStage1Gone);
         bundle.putInt("musicIndex", index);
         bundle.putInt("musicStopIndex", afterActivityIndex);
         intent.putExtras(bundle);
@@ -82,7 +85,7 @@ public class Stage1Activity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // 回到地圖
+    // back to the MapActivity
     public void back(View v) {
         Intent intent = new Intent();
         intent.setClass(Stage1Activity.this, MapActivity.class);
@@ -90,13 +93,13 @@ public class Stage1Activity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         afterActivityIndex = 0;
         bundle.putIntArray("pictureTag1", pictureStageOne);
-
+        bundle.putIntArray("pictureGone1", btnStage1Gone);
         intent.putExtras(bundle);
 
         startActivity(intent);
     }
 
-    // 切到右半邊
+    // switch the stage to the right side
     public void changePage(View v) {
         Intent intent = new Intent();
         intent.setClass(Stage1Activity.this, Stage1_2Activity.class);
@@ -104,6 +107,7 @@ public class Stage1Activity extends AppCompatActivity {
         afterActivityIndex = 1;
         Bundle bundle = new Bundle();
         bundle.putIntArray("pictureTag1", pictureStageOne);
+        bundle.putIntArray("pictureGone1", btnStage1Gone);
         bundle.putInt("musicStopIndex", afterActivityIndex);
         intent.putExtras(bundle);
 
@@ -116,32 +120,51 @@ public class Stage1Activity extends AppCompatActivity {
         mp.setLooping(true);
     }
 
-    // 把上方物品拉到下面物品格子
+    // get pictureTag1 and set image source
+    public void setImage(){
+        if (pictureStageOne[0] == 1) {
+            btnList1.setImageResource(R.drawable.erase);
+        } else if (pictureStageOne[1] == 1) {
+            btnList2.setImageResource(R.drawable.erase);
+        }
+        if (pictureStageOne[0] == 2) {
+            btnList1.setImageResource(R.drawable.cake);
+        } else if (pictureStageOne[1] == 2) {
+            btnList2.setImageResource(R.drawable.cake);
+        }
+    }
+
+    // to get the above object and set the list's image
     public void changeButtomListEvent(View v) {
         if (v.getId() == R.id.btnObjectEraser) {
             if (pictureStageOne[0] == 0) {
                 btnList1.setImageResource(R.drawable.erase);
                 pictureStageOne[0] = 1;
                 btnObjectEraser.setVisibility(View.GONE);
+                btnStage1Gone[0] = 1;
+
             } else if (pictureStageOne[1] == 0) {
                 btnList2.setImageResource(R.drawable.erase);
                 pictureStageOne[1] = 1;
                 btnObjectEraser.setVisibility(View.GONE);
+                btnStage1Gone[0]= 1;
             }
         } else if (v.getId() == R.id.btnObjectCake) {
             if (pictureStageOne[0] == 0) {
                 btnList1.setImageResource(R.drawable.cake);
                 pictureStageOne[0] = 2;
                 btnObjectCake.setVisibility(View.GONE);
+                btnStage1Gone[1] = 1;
             } else if (pictureStageOne[1] == 0) {
                 btnList2.setImageResource(R.drawable.cake);
                 pictureStageOne[1] = 2;
                 btnObjectCake.setVisibility(View.GONE);
+                btnStage1Gone[1] = 1;
             }
         }
     }
 
-    // 判斷是否通關
+    // check whether to clear stage1
     public void resultView(View v) {
         int flag;
         if (v.getId() == R.id.btnList1)
@@ -152,22 +175,51 @@ public class Stage1Activity extends AppCompatActivity {
             return;
         if (flag <= 0 || flag > 2)
             return;
-        Intent intent = new Intent();
-        if (flag == 1) //跳到失敗頁面
-            intent.setClass(Stage1Activity.this, ShowResult2Activity.class);
-        else         //跳到成功頁面
-            intent.setClass(Stage1Activity.this, ShowResultActivity.class);
-        startActivity(intent);
 
-        Stage1Activity.this.finish();
+        if (flag == 1)   {
+            //go to the Fail
+            ImageView imvResult = new ImageView(Stage1Activity.this);
+            imvResult.setImageResource(R.drawable.stage1_fail);
+            new AlertDialog.Builder(Stage1Activity.this)
+                    .setIcon(R.drawable.icn_score)
+                    .setTitle("失敗了...")
+                    .setView(imvResult)
+                    .setPositiveButton("ok", null)
+                    .show();
+        }
+        else {
+            //go to the Success
+            ImageView imvResult = new ImageView(Stage1Activity.this);
+            imvResult.setImageResource(R.drawable.stage1_success);
+            new AlertDialog.Builder(Stage1Activity.this)
+                    .setIcon(R.drawable.icn_score)
+                    .setTitle("成功了!!")
+                    .setView(imvResult)
+                    .setPositiveButton("ok", null)
+                    .show();
+        }
     }
 
-    //判斷是否把道具的view設定為GONE
-    public void whetherToSetGone(View v) {
-        // 判斷哪個關卡進來,給定一個參數判斷btn的數量,在把參數用迴圈方式去判斷是否取得物件跟設定為GONE...etc
-        //for (int i=0; i<num; i++) {
+    // check whether to set the attributes of the above object's imageView to GONE
+    public void whetherToSetGone() {
+        if(btnStage1Gone[0]==1){
+            btnObjectEraser.setVisibility(View.GONE);
+        }
+        if(btnStage1Gone[1]==1) {
+            btnObjectCake.setVisibility(View.GONE);
+        }
+    }
 
-       // }
+    public void setFlagOfResult(View v) {
+        int flag;
+        if (v.getId() == R.id.btnList1)
+            flag = pictureStageOne[0];
+        else if (v.getId() == R.id.btnList2)
+            flag = pictureStageOne[1];
+        else
+            return;
+        if (flag <= 0 || flag > 2)
+            return;
     }
 }
 
